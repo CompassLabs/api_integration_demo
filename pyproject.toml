@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "demo-integration"
+version = "0.1.0"
+description = ""
+authors = ["Ben Hack <ben@compasslabs.ai>"]
+readme = "README.md"
+packages = [{include = "demo_integration"}]
+
+[tool.poetry.dependencies]
+python = "3.12.7"
+pydantic = "^2.10.6"
+compass-api-client = "^1.0.6"
+web3 = "^7.7.0"
+python-dotenv = "^1.0.1"
+devtools = "^0.12.2"
+
+[tool.poetry.group.dev.dependencies]
+black = "^25.1.0"
+web3 = "^7.7.0"
+isort = "^6.0.0"
+docformatter = "^1.7.5"
+
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
