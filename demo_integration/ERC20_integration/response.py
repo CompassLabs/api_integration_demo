@@ -8,12 +8,14 @@ from compass.api_client.models.token import Token
 class UnsignedTransaction(BaseModel):
     chainId: int = Field(..., description="The chain id of the transaction")
     data: str = Field(..., description="The data of the transaction")
-    from_: str = Field(..., alias="from", description="The sender of the transaction")
+    from_: str = Field(..., alias="from",
+                       description="The sender of the transaction")
     gas: int = Field(..., description="The gas of the transaction")
     to: str = Field(..., description="The recipient of the transaction")
     value: int = Field(..., description="The value of the transaction")
     nonce: int = Field(..., description="The nonce of the address")
-    maxFeePerGas: int = Field(..., description="The max fee per gas of the transaction")
+    maxFeePerGas: int = Field(...,
+                              description="The max fee per gas of the transaction")
     maxPriorityFeePerGas: int = Field(
         ..., description="The max priority fee per gas of the transaction"
     )

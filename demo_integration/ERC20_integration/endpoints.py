@@ -1,15 +1,20 @@
 import json
 import os
+from typing import Any
 
 import devtools
-from demo_integration.ERC20_integration.request import *
-from demo_integration.ERC20_integration.response import *
+from compass.api_client.models.chain import Chain
+from compass.api_client.models.token import Token
 from dotenv import load_dotenv
 from web3 import HTTPProvider, Web3
 from web3.contract import Contract
 
-from compass.api_client.models.chain import Chain
-from compass.api_client.models.token import Token
+from demo_integration.ERC20_integration.request import (
+    GetErc20Balance,
+    WrapEthRequest,
+    WrapEthRequestCallData,
+)
+from demo_integration.ERC20_integration.response import BalanceInfo, UnsignedTransaction
 
 load_dotenv()
 ETHEREUM_RPC_URL = os.getenv("ETHEREUM_RPC_URL")
@@ -66,15 +71,16 @@ def wrap_eth_handler(
     unsigned_transaction = contract.functions.deposit().build_transaction(
         {
             "from": sender,
-            "value": int(
-                amount
-            ),  # this would be incorrect as it is not adjusted for decimals!
-            "nonce": 100,  # we can derive the nonce, you do not need to re-implement this
+            # this would be incorrect as it is not adjusted for decimals!
+            "value": int(amount),
+            # we can derive the nonce, you do not need to re-implement this
+            "nonce": 100,
         }
     )
     return UnsignedTransaction(**unsigned_transaction)
 
 
+if __name__ == ""
 # and then demonstrate usage/add tests
 balance = get_erc20_balance_handler(
     Chain.ETHEREUM_COLON_MAINNET,

@@ -27,6 +27,8 @@ For each endpoint you must provide:
 
 ### Using the Repository
 
+1. Copy `.env.example` file -> `.env` and fill values
+
 ```
 poetry install
 ```
