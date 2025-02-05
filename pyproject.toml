@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "demo_integration"}]
 
 [tool.poetry.dependencies]
-python = "3.12.7"
+python = "^3.12"
 pydantic = "^2.10.6"
 compass-api-client = "^1.0.6"
 web3 = "^7.7.0"
