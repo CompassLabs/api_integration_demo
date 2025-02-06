@@ -3,7 +3,7 @@ from typing import Generic, TypeVar
 
 from pydantic import BaseModel, Field
 
-from compass.api_client.models import Token
+from compass.api_client.models.token import Token
 
 # generic types for compass API
 

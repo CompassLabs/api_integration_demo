@@ -1,3 +1,4 @@
+from decimal import Decimal
 import json
 import os
 from typing import Any
@@ -57,8 +58,13 @@ def get_erc20_balance_handler(
     contract = get_erc20_contract(address, "ERC20")
     amount_in_wei = contract.functions.balanceOf(user).call()
     decimals = contract.functions.decimals().call()
-    # it is important to return a human-readable value!
-    return Decimal(str(amount_in_wei)) / Decimal(10**decimals)
+
+    return BalanceInfo(
+        amount=amount_in_wei,
+        decimals=decimals,
+        token_symbol=token,
+        token_address=address,
+    )
 
 
 def wrap_eth_handler(
@@ -71,7 +77,7 @@ def wrap_eth_handler(
     unsigned_transaction = contract.functions.deposit().build_transaction(
         {
             "from": sender,
-            # this would be incorrect as it is not adjusted for decimals!
+            # this value would be incorrect as it is not adjusted for decimals!
             "value": int(amount),
             # we can derive the nonce, you do not need to re-implement this
             "nonce": 100,
@@ -80,21 +86,21 @@ def wrap_eth_handler(
     return UnsignedTransaction(**unsigned_transaction)
 
 
-if __name__ == ""
-# and then demonstrate usage/add tests
-balance = get_erc20_balance_handler(
-    Chain.ETHEREUM_COLON_MAINNET,
-    GetErc20Balance(
-        user="0xA9D1e08C7793af67e9d92fe308d5697FB81d3E43", token=Token.WETH
-    ),
-)
-wrap_eth_transaction = wrap_eth_handler(
-    Chain.ETHEREUM_COLON_MAINNET,
-    WrapEthRequest(
-        sender="0xA9D1e08C7793af67e9d92fe308d5697FB81d3E43",
-        call_data=WrapEthRequestCallData(amount=0.001),
-    ),
-)
+if __name__ == "__main__":
+    balance_info = get_erc20_balance_handler(
+        Chain.ETHEREUM_COLON_MAINNET,
+        GetErc20Balance(
+            user="0xA9D1e08C7793af67e9d92fe308d5697FB81d3E43", token=Token.WETH
+        ),
+    )
+    wrap_eth_transaction = wrap_eth_handler(
+        Chain.ETHEREUM_COLON_MAINNET,
+        WrapEthRequest(
+            sender="0xA9D1e08C7793af67e9d92fe308d5697FB81d3E43",
+            call_data=WrapEthRequestCallData(amount=Decimal(0.001)),
+        ),
+    )
 
-devtools.debug(balance)
-devtools.debug(wrap_eth_transaction)
+    # NOTE: and then demonstrate usage/add tests
+    devtools.debug(balance_info.balance)
+    devtools.debug(wrap_eth_transaction)

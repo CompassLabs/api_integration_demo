@@ -36,3 +36,8 @@ class BalanceInfo(BaseModel):
         description="Address of the token",
         examples=["0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"],
     )
+
+    # it is important to return a human-readable balance value
+    @property
+    def balance(self):
+        return Decimal(str(self.amount)) / Decimal(10**self.decimals)

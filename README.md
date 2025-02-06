@@ -6,19 +6,19 @@ This repository shows what CompassLabs would need to integrate a new protocol.
 
 For each endpoint you must provide:
 
-- User friendly request models
-- User friendly response models
-- Code for handling the request
+- User friendly request models -> `requests.py`
+- User friendly response models -> `response.py`
+- Code for handling the request -> `endpoints.py`
 
 ## We need
 
 - Endpoints for performing actions on the protocol
   - Our API will return an unsigned transaction
-- Endpoints for fetching information from the chain.
-  - The user must be able to make informed decisions about what they will do on your protocol by calling these endpoints.
+- Endpoints for fetching information from the chain
+  - The user must be able to make informed decisions about what they will do on your protocol by calling these endpoints
   - There must be no requirement on understanding of encoding formats
     - you _must not_ return values that require decoding using further solidity calls
-    - Ray format, x96 format, scaled values etc.
+    - e.g. Ray format, x96 format, scaled values
 
 ## Nice to have
 
@@ -29,6 +29,14 @@ For each endpoint you must provide:
 
 1. Copy `.env.example` file -> `.env` and fill values
 
+2.
+
 ```
 poetry install
+```
+
+3.
+
+```
+python3 endpoints.py
 ```
